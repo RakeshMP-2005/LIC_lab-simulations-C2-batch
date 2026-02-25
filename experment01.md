@@ -225,8 +225,6 @@ ID ≈ 200 µA
 
 ---
 
-### Conclusion
-
 The theoretical width provides an initial estimate.  
 However, practical simulation requires width tuning due to non-ideal MOSFET model effects.  
 
