@@ -394,14 +394,14 @@ Therefore, the simulated gain (2.29 V/V) is lower than the ideal theoretical gai
 
 # AC ANALYSIS (.ac)
 
-## Without Load Capacitor
+## Without  Capacitor
 
 ![image](https://github.com/user-attachments/assets/16f109b9-bd99-49bc-83d7-49e59c7d92ec)
 
 Midband Gain ≈ 7.178 dB  
 Upper cutoff frequency ≈ 100 GHz  
 
-## With Load Capacitor (CL = 1pF)
+## With  Capacitor (CL = 1pF)
 
 ![image](https://github.com/user-attachments/assets/65e77e7e-0b27-4fe9-a81b-368258d5e41d)
 
