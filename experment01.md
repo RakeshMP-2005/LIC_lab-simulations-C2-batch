@@ -126,6 +126,7 @@ RD = (VDD − VDS) / ID
 RD = (1.5 − 0.75) / 200µA  
 RD = 3.75kΩ  
 
+
 ##  Calculation of Process Parameter of (kn) and Transistor Width
 
 The process transconductance parameter is given by:
@@ -205,6 +206,16 @@ This difference occurs due to second-order effects, mobility degradation, and mo
 
 ---
 
+For a MOSFET operating in saturation region,
+
+I<sub>D</sub> ∝ (W / L)
+
+This means the drain current is directly proportional to the transistor width (W), provided V<sub>GS</sub>, V<sub>DS</sub>, and L remain constant.
+
+Therefore, increasing W increases I<sub>D</sub> proportionally.
+
+---
+
 ### Width Optimization
 
 To obtain the desired drain current of 200 µA in simulation, the transistor width was increased.
@@ -231,6 +242,28 @@ However, practical simulation requires width tuning due to non-ideal MOSFET mode
 Final design width used in simulation:
 
 W = 1.575 µm
+
+---
+# Effect of Drain Resistance on Q-Point
+
+In a Common Source (CS) NMOS amplifier, the drain resistor (R<sub>D</sub>) plays an important role in determining the DC operating point. When R<sub>D</sub> increases, the voltage drop across it (I<sub>D</sub> × R<sub>D</sub>) increases. Since the supply voltage (V<sub>DD</sub>) is constant, the drain voltage (V<sub>D</sub>) decreases. Therefore, V<sub>DS</sub> reduces.
+
+This variation shifts the Q-point of the transistor.
+
+## Variation of V<sub>DS</sub> with Drain Resistance (R<sub>D</sub>)
+
+| S.No | Drain Resistance (R<sub>D</sub>) | V<sub>DS</sub> (Drain-to-Source Voltage) |
+|------|----------------------------------|------------------------------------------|
+| 1    | 2 kΩ                             | 1.07915 V                                |
+| 2    | 3 kΩ                             | 0.885942 V                               |
+| 3    | 3.75 kΩ                          | 0.749282 V (required)                              |
+| 4    | 5 kΩ                             | 0.541142 V                               |
+
+### Observation
+
+From the table, it is observed that as R<sub>D</sub> increases, V<sub>DS</sub> decreases gradually. This happens because a higher drain resistance produces a larger voltage drop across it, thereby reducing the drain voltage.
+For R<sub>D</sub> = 3.75 kΩ, V<sub>DS</sub> ≈ 0.749 V, which gives the required operating point for proper amplifier biasing.
+
 
 ---
 
@@ -394,14 +427,14 @@ Therefore, the simulated gain (2.29 V/V) is lower than the ideal theoretical gai
 
 # AC ANALYSIS (.ac)
 
-## Without  Capacitor
+## Without Load Capacitor
 
 ![image](https://github.com/user-attachments/assets/16f109b9-bd99-49bc-83d7-49e59c7d92ec)
 
 Midband Gain ≈ 7.178 dB  
 Upper cutoff frequency ≈ 100 GHz  
 
-## With  Capacitor (CL = 1pF)
+## With load Capacitor (CL = 1pF)
 
 ![image](https://github.com/user-attachments/assets/65e77e7e-0b27-4fe9-a81b-368258d5e41d)
 
@@ -409,6 +442,18 @@ Midband Gain ≈ 7.178 dB
 Upper Cutoff Frequency fH = 47.605 MHz  
 
 Bandwidth ≈ 47.605 MHz  
+
+### Observation
+
+1. When a load capacitor (C<sub>L</sub>) is added to a CS amplifier, the gain remains constant because gain mainly depends on g<sub>m</sub> and R<sub>D</sub>.
+
+2. At mid frequencies, C<sub>L</sub> behaves like an open circuit and does not affect the amplification.
+
+3. C<sub>L</sub> forms an RC network with the output resistance (R<sub>out</sub>).
+
+4. This increases the time constant (R<sub>out</sub>C<sub>L</sub>) of the circuit.
+
+5. As a result, the upper cutoff frequency decreases and the bandwidth reduces.
 
 ---
 
