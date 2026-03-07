@@ -548,3 +548,354 @@ The amplifier achieves:
 - Unity Gain Bandwidth ≈ **17.4 MHz**
 
 The design demonstrates the trade-off between **gain and stability introduced by source degeneration**.
+
+
+---
+# Common Source Amplifier with PMOS Active Load and Diode-Connected NMOS Bias (TSMC 180 nm)
+
+## Objective
+
+To design and analyze a **Common Source MOS amplifier with PMOS active load and diode-connected NMOS bias** using **TSMC 180 nm CMOS technology** and evaluate its performance in terms of **gain, bandwidth, unity gain bandwidth, and output voltage swing**.
+
+---
+
+## Circuit Diagram
+
+<img width="943" height="846" alt="image" src="https://github.com/user-attachments/assets/95a90ffb-b433-42c8-ada6-82b7df0286ad" />
+
+
+*Figure: Common Source Amplifier with PMOS Active Load and Diode-Connected NMOS Bias*
+
+---
+
+## Design Specifications
+
+| Parameter | Value |
+|---|---|
+| Technology | TSMC 180 nm |
+| Supply Voltage V<sub>DD</sub> | 1.5 V |
+| Power Constraint | ≤ 0.5 mW |
+| Load Capacitance C<sub>L</sub> | 1 pF |
+| Channel Length L<sub>n</sub> | 180 nm |
+
+---
+
+## Bias Current Calculation
+
+From the power constraint
+
+P ≤ V<sub>DD</sub> × I<sub>D</sub>
+
+0.5 mW ≥ 1.5 × I<sub>D</sub>
+
+I<sub>D</sub> ≤ 0.33 mA
+
+Chosen operating current
+
+I<sub>D</sub> = **200 µA**
+
+This value satisfies the power constraint while maintaining proper transistor operation.
+
+---
+
+## Assumption of Overdrive Voltage
+
+V<sub>OV1</sub> = 0.2 V  
+V<sub>OV2</sub> = 0.2 V  
+
+### Justification
+
+1. A moderate overdrive voltage provides a **balance between gain and power consumption**.  
+2. It ensures the MOS transistor operates in the **strong inversion saturation region**.  
+3. Lower V<sub>OV</sub> increases **transconductance g<sub>m</sub>**, which improves amplifier gain.
+
+---
+
+## DC Bias Analysis
+
+Overdrive voltage relation
+
+V<sub>OV</sub> = V<sub>GS</sub> − V<sub>TH</sub>
+
+Given
+
+V<sub>TH</sub> ≈ 0.36 V
+
+Therefore
+
+V<sub>GS3</sub> = V<sub>OV3</sub> + V<sub>TH</sub>
+
+V<sub>GS3</sub> = 0.2 + 0.36
+
+V<sub>GS3</sub> = **0.56 V**
+
+Thus
+
+V<sub>G3</sub> = **0.56 V**
+
+For the amplifying NMOS transistor
+
+V<sub>GS1</sub> = V<sub>OV1</sub> + V<sub>TH</sub>
+
+V<sub>GS1</sub> = 0.2 + 0.36
+
+V<sub>GS1</sub> = **0.56 V**
+
+Gate bias
+
+V<sub>G1</sub> = V<sub>S</sub> + V<sub>GS1</sub>
+
+V<sub>G1</sub> = 0.56 + 0.56
+
+V<sub>G1</sub> = **1.12 V**
+
+---
+
+## Output Swing Analysis
+
+For PMOS to remain in saturation
+
+V<sub>SD</sub> ≥ V<sub>OV</sub>
+
+Since
+
+V<sub>SD</sub> = V<sub>DD</sub> − V<sub>OUT</sub>
+
+Therefore
+
+V<sub>DD</sub> − V<sub>OUT</sub> ≥ V<sub>OV2</sub>
+
+Thus
+
+V<sub>OUT,max</sub> = V<sub>DD</sub> − V<sub>OV2</sub>
+
+V<sub>OUT,max</sub> = 1.5 − 0.2
+
+V<sub>OUT,max</sub> = **1.30 V**
+
+---
+
+## Minimum Output Voltage
+
+For NMOS saturation
+
+V<sub>DS</sub> ≥ V<sub>OV</sub>
+
+V<sub>DS</sub> = V<sub>OUT</sub> − V<sub>RS</sub>
+
+Where
+
+V<sub>RS</sub> = 0.56 V
+
+Therefore
+
+V<sub>OUT,min</sub> = V<sub>RS</sub> + V<sub>OV1</sub>
+
+V<sub>OUT,min</sub> = 0.56 + 0.2
+
+V<sub>OUT,min</sub> = **0.76 V**
+
+---
+
+## Output Swing
+
+| Parameter | Value |
+|---|---|
+| V<sub>OUT,max</sub> | 1.30 V |
+| V<sub>OUT,min</sub> | 0.76 V |
+
+Output swing
+
+V<sub>swing</sub> = V<sub>OUT,max</sub> − V<sub>OUT,min</sub>
+
+V<sub>swing</sub> = **0.54 V**
+
+---
+
+## Symmetrical Bias Point
+
+For symmetrical signal swing
+
+V<sub>OUT(Q)</sub> = (V<sub>OUT,max</sub> + V<sub>OUT,min</sub>) / 2
+
+V<sub>OUT(Q)</sub> ≈ **1.03 V**
+
+Thus the output node is biased at **1.03 V**.
+
+---
+## DC Analysis
+<img width="459" height="513" alt="image" src="https://github.com/user-attachments/assets/3deece04-dfe4-4bc3-a2e1-9eb548d640f9" />
+
+---
+
+## Headroom and Legroom
+
+**Headroom**
+
+Voltage margin between **V<sub>OUT</sub> and V<sub>DD</sub>** ensuring the PMOS transistor remains in saturation.
+
+**Legroom**
+
+Voltage margin between **V<sub>OUT</sub> and ground** ensuring the NMOS transistor remains in saturation.
+
+Maintaining sufficient headroom and legroom prevents **signal clipping and distortion**.
+
+---
+
+## Width Calculation
+
+MOS saturation current equation
+
+I<sub>D</sub> = (μ<sub>n</sub>C<sub>ox</sub>/2) × (W/L) × (V<sub>OV</sub>)²
+
+Rearranging
+
+W = (2 × I<sub>D</sub> × L) / (μ<sub>n</sub>C<sub>ox</sub> × V<sub>OV</sub>²)
+
+Theoretical NMOS width
+
+W ≈ **7.81 µm**
+
+---
+
+## PMOS Width Calculation
+
+Using the same equation
+
+W ≈ **18.49 µm**
+
+---
+
+## Width Optimization in Simulation
+
+| Transistor | Final Width |
+|---|---|
+| NMOS1 | 32.8 µm |
+| NMOS3 | 32.8 µm |
+| PMOS | 80 µm |
+
+---
+
+## Reason for Difference Between Theoretical and Simulated Current
+
+The difference between theoretical and simulated current occurs due to practical MOSFET effects:
+
+1. **Channel length modulation**
+2. **Mobility degradation**
+3. **Accurate BSIM transistor models in TSMC technology**
+
+Therefore transistor widths are adjusted during simulation.
+
+---
+
+## Transient Analysis
+
+<img width="1912" height="815" alt="image" src="https://github.com/user-attachments/assets/b8baae12-1845-45e2-9e0a-461bef7c3101" />
+
+
+| Parameter | Value |
+|---|---|
+| V<sub>OUT,pp</sub> | 304.37 mV |
+| V<sub>IN,pp</sub> | 19.69 mV |
+
+Voltage gain
+
+A<sub>v</sub> = V<sub>OUT</sub> / V<sub>IN</sub>
+
+A<sub>v</sub> ≈ **15.458 V/V**
+
+---
+
+## Gain in Decibels
+
+Gain(dB) = 20 log<sub>10</sub>(A<sub>v</sub>)
+
+Gain ≈ **23.283 dB**
+
+---
+
+## AC Analysis
+
+<img width="1919" height="840" alt="image" src="https://github.com/user-attachments/assets/0f8b50da-a791-4f0a-92a7-0c68fea6b782" />
+
+
+| Parameter | Value |
+|---|---|
+| Midband Gain | 23.987 dB |
+| Gain at −3 dB | 20.98 dB |
+
+High-frequency cutoff
+
+f<sub>H</sub> = **280.97 MHz**
+
+---
+
+## Gain Bandwidth Product
+
+GBP = A<sub>v</sub> × f<sub>-3dB</sub>
+
+GBP ≈ **4.3 GHz**
+
+---
+
+## Unity Gain Bandwidth
+
+Unity gain bandwidth occurs when gain becomes **0 dB**
+
+UGB ≈ **4.018 GHz**
+
+Thus
+
+GBP ≈ UGB
+
+---
+
+## AC Analysis with Load Capacitor
+
+<img width="1915" height="859" alt="image" src="https://github.com/user-attachments/assets/87e32265-475b-4c47-b409-19e0fbbe8a63" />
+
+
+For
+
+C<sub>L</sub> = 1 pF
+Gain remain constant but Bw changes
+| Parameter | Value |
+|---|---|
+| Bandwidth | 17.519 MHz |
+| Unity Gain Frequency | 264.97 MHz |
+
+---
+
+## Gain Bandwidth Product (with C<sub>L</sub>)
+
+GBP = A<sub>v</sub> × BW
+
+GBP ≈ **270.808 MHz**
+
+Again
+
+GBP ≈ UGB
+
+---
+
+## Inference
+
+1. The amplifier was successfully biased at **200 µA**.  
+2. The DC output voltage was set to **1.03 V** for symmetrical output swing.  
+3. The **PMOS active load increases output resistance**, improving voltage gain.  
+4. Device widths required adjustment due to **non-ideal MOS effects in simulation**.  
+5. Adding load capacitance significantly **reduces bandwidth while gain remains nearly constant**.
+
+---
+
+## Conclusion
+
+A **Common Source amplifier with PMOS active load and diode-connected NMOS bias** was designed and simulated using **TSMC 180 nm technology**.
+
+The amplifier achieved
+
+- Voltage Gain ≈ **15.45 V/V (23.28 dB)**  
+- High-frequency bandwidth ≈ **280.97 MHz**  
+- Unity gain bandwidth ≈ **4.018 GHz**
+
+The use of an **active load improves gain while maintaining proper biasing and output swing**.
