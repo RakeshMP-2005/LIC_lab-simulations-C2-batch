@@ -24,7 +24,8 @@ To design and analyze a **MOS Common Source amplifier** using **TSMC 180 nm CMOS
 
 ## Circuit Diagram
 
-*(Insert LTspice circuit screenshot here)*  
+<img width="793" height="683" alt="image" src="https://github.com/user-attachments/assets/36f3eb07-de29-4078-90e4-412284c09b34" />
+
 
 **Figure 1: Common Source Amplifier Circuit**
 
@@ -193,7 +194,8 @@ These values produce approximately **200 µA** current.
 
 ## DC Operating Point
 
-*(Insert DC operating point screenshot here)*  
+<img width="498" height="445" alt="image" src="https://github.com/user-attachments/assets/97817f35-73e8-4152-a299-30d1cecf061f" />
+
 
 **Figure 2: Operating Point**
 
@@ -243,7 +245,8 @@ Output Swing = **0.8 V**
 
 ## Transient Analysis
 
-*(Insert transient waveform screenshot here)*  
+<img width="1912" height="876" alt="image" src="https://github.com/user-attachments/assets/eb87d5c8-e9dc-4ec3-a68c-30bae3c9cc38" />
+  
 
 **Figure 3: Transient Response**
 
@@ -258,7 +261,8 @@ Output Swing = **0.8 V**
 
 ## AC Analysis
 
-*(Insert Bode plot here)*  
+<img width="1914" height="419" alt="image" src="https://github.com/user-attachments/assets/3e839792-b607-4c56-88a0-8321e366a7a3" />
+
 
 **Figure 4: Frequency Response**
 
