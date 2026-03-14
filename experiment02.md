@@ -584,69 +584,69 @@ Gain ≈ **8.49 dB**
 
 ### Channel Length Modulation Parameter (λ)
 
-In MOSFETs, the channel length modulation parameter (λ) represents the dependence of the drain current on the drain–source voltage (V<sub>DS</sub>) in the saturation region. Due to channel length modulation, the drain current slightly increases with V<sub>DS</sub>, which results in a **finite small-signal output resistance** for the transistor.
+In MOSFETs, the channel length modulation parameter (λ) represents the dependence of the drain current on the drain–source voltage (V<sub>DS</sub>) in the saturation region. Due to channel length modulation, the drain current slightly increases with V<sub>DS</sub>, which results in a finite small-signal output resistance.
 
-In practical CMOS technologies, the values of λ for **NMOS and PMOS devices are not exactly the same**. One of the primary reasons for this difference is the variation in **carrier mobility**. The mobility of electrons (in NMOS devices) is significantly higher than the mobility of holes (in PMOS devices). Because of this mobility difference, the channel characteristics and effective channel length modulation behavior differ between NMOS and PMOS transistors.
+In practical CMOS technologies, λ for **NMOS and PMOS devices are different**. This occurs mainly because **electron mobility in NMOS devices is higher than hole mobility in PMOS devices**, which changes the channel behavior and output resistance characteristics.
 
-However, for simplified theoretical analysis, a typical approximate value is assumed based on commonly used ranges for **180 nm CMOS technology**.
+For theoretical analysis, typical approximate values are assumed.
 
-Assumed values:
+**Assumed values**
 
 λ<sub>n</sub> = **0.1 V⁻¹**  
-λ<sub>p</sub> = **0.1 V⁻¹**
+λ<sub>p</sub> = **0.05 V⁻¹**
 
 ---
 
-### Step 1: Transconductance (g<sub>m1</sub>)
+## Step 1: Transconductance (g<sub>m1</sub>)
 
 | Parameter | Expression | Substitution | Result |
 |---|---|---|---|
 | g<sub>m1</sub> | 2I<sub>D</sub> / V<sub>OV</sub> | (2 × 200×10⁻⁶) / 0.25 | **1.6 mS** |
 
-Since transistors **M1 and M3 carry the same current and have the same overdrive voltage**,  
+Since **M1 and M3 carry the same current and have the same overdrive voltage**
 
 g<sub>m1</sub> = g<sub>m3</sub> = **1.6 mS**
 
 ---
 
-### Step 2: Output Resistance
+## Step 2: Output Resistance
 
 | Transistor | Expression | Substitution | Result |
 |---|---|---|---|
-| NMOS (r<sub>o1</sub>, r<sub>o2</sub>) | 1 / (λ I<sub>D</sub>) | 1 / (0.1 × 200×10⁻⁶) | **50 kΩ** |
-| PMOS (r<sub>o3</sub>) | 1 / (λ I<sub>D</sub>) | 1 / (0.1 × 200×10⁻⁶) | **50 kΩ** |
+| NMOS (r<sub>o1</sub>, r<sub>o2</sub>) | 1 / (λ<sub>n</sub> I<sub>D</sub>) | 1 / (0.1 × 200×10⁻⁶) | **50 kΩ** |
+| PMOS (r<sub>o3</sub>) | 1 / (λ<sub>p</sub> I<sub>D</sub>) | 1 / (0.05 × 200×10⁻⁶) | **100 kΩ** |
 
 ---
 
-### Step 3: Effective Output Resistance
+## Step 3: Effective Output Resistance
 
 r<sub>o,eff</sub> = r<sub>o1</sub> ∥ r<sub>o3</sub>
 
-r<sub>o,eff</sub> = (50k × 50k) / (50k + 50k)
+r<sub>o,eff</sub> = (50k × 100k) / (50k + 100k)
 
-r<sub>o,eff</sub> ≈ **25 kΩ**
+r<sub>o,eff</sub> ≈ **33.33 kΩ**
 
 ---
 
-### Step 4: Voltage Gain (With Source Degeneration)
+## Step 4: Voltage Gain (With Source Degeneration)
 
 A<sub>v</sub> = − g<sub>m1</sub> × r<sub>o,eff</sub> / (1 + g<sub>m1</sub> r<sub>o2</sub>)
 
 Substituting values
 
-A<sub>v</sub> = − (1.6×10⁻³ × 25×10³) / (1 + 1.6×10⁻³ × 50×10³)
+A<sub>v</sub> = − (1.6×10⁻³ × 33.33×10³) / (1 + 1.6×10⁻³ × 50×10³)
 
-A<sub>v</sub> = − 40 / 81
+A<sub>v</sub> = − 53.33 / 81
 
-A<sub>v</sub> ≈ **−0.494 V/V**
+A<sub>v</sub> ≈ **−0.658 V/V**
 
 ---
 
-### Gain in dB
+## Gain in dB
 
 A<sub>v</sub>(dB) = 20 log<sub>10</sub>(|A<sub>v</sub>|)
 
-A<sub>v</sub>(dB) ≈ **−6.12 dB**
+A<sub>v</sub>(dB) ≈ **−3.63 dB**
 
 ---
 
@@ -655,10 +655,9 @@ A<sub>v</sub>(dB) ≈ **−6.12 dB**
 | Type | Gain (V/V) | Gain (dB) |
 |---|---|---|
 | Practical | **2.8146** | **8.49 dB** |
-| Theoretical | **0.494** | **−6.12 dB** |
+| Theoretical (λ<sub>p</sub>=0.05) | **0.658** | **−3.63 dB** |
 
 The difference between theoretical and practical gain arises due to **parasitic capacitances, mobility degradation, channel length modulation effects, and non-ideal MOSFET model parameters present in the simulation models**.
-
 ---
 
 ## AC Analysis
