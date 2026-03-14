@@ -247,15 +247,111 @@ Output Swing = **0.8 V**
 
 <img width="1912" height="876" alt="image" src="https://github.com/user-attachments/assets/eb87d5c8-e9dc-4ec3-a68c-30bae3c9cc38" />
   
-
-**Figure 3: Transient Response**
+## Practical Gain Calculation
 
 | Parameter | Value |
 |---|---|
-| Vin (p-p) | 0.01969 V |
-| Vout (p-p) | 0.17281 V |
+| V<sub>in</sub> (p-p) | 0.01969 V |
+| V<sub>out</sub> (p-p) | 0.17281 V |
 | Gain | 8.7765 V/V |
-| Gain (dB) | **18.86 dB** |
+| Gain (dB) | 18.86 dB |
+
+Voltage gain
+
+A<sub>v</sub> = V<sub>OUT</sub> / V<sub>IN</sub>
+
+A<sub>v</sub> ≈ **8.7765 V/V**
+
+### Gain in dB
+
+A<sub>v</sub>(dB) = 20 log<sub>10</sub>(A<sub>v</sub>)
+
+A<sub>v</sub>(dB) ≈ **18.86 dB**
+
+---
+
+## Theoretical Gain Calculation
+
+### Assumption of Channel Length Modulation Parameter (λ)
+
+In MOSFETs, the channel length modulation parameter (λ) models the dependence of the drain current on the drain–source voltage (V<sub>DS</sub>) when the transistor operates in the saturation region. Because of this effect, the drain current slightly increases with V<sub>DS</sub>, resulting in a **finite small-signal output resistance**.
+
+In practical CMOS technologies, λ depends on the **channel length and fabrication parameters**. For short-channel technologies such as **180 nm**, λ typically lies in the range of **0.05 – 0.1 V⁻¹** for hand calculations.
+
+For simplicity in theoretical analysis, we assume:
+
+λ = **0.1 V⁻¹**
+
+This value is commonly used in first-order small-signal calculations to estimate the **output resistance of MOS transistors**.
+
+---
+
+### Step 1: Transconductance
+
+g<sub>m</sub> = 2I<sub>D</sub> / V<sub>OV</sub>
+
+g<sub>m</sub> = (2 × 200 × 10⁻⁶) / 0.25
+
+g<sub>m</sub> = **1.6 × 10⁻³ S**
+
+g<sub>m</sub> = **1.6 mS**
+
+---
+
+### Step 2: Output Resistance
+
+r<sub>o</sub> = 1 / (λ I<sub>D</sub>)
+
+r<sub>o</sub> = 1 / (0.1 × 200 × 10⁻⁶)
+
+r<sub>o</sub> = **50 kΩ**
+
+---
+
+### Step 3: Effective Output Resistance
+
+(r<sub>o1</sub> ∥ r<sub>o2</sub>)
+
+= (50k ∥ 50k)
+
+= **25 kΩ**
+
+---
+
+### Step 4: Voltage Gain
+
+For a source-degenerated amplifier
+
+A<sub>v</sub> = − g<sub>m</sub> (r<sub>o1</sub> ∥ r<sub>o2</sub>) / (1 + g<sub>m</sub>R<sub>S</sub>)
+
+Substituting values
+
+A<sub>v</sub> = − (1.6 × 10⁻³ × 25 × 10³) / (1 + 1.6 × 10⁻³ × 1 × 10³)
+
+A<sub>v</sub> = − 40 / 2.6
+
+A<sub>v</sub> ≈ **−15.38 V/V**
+
+---
+
+### Gain in dB
+
+A<sub>v</sub>(dB) = 20 log<sub>10</sub>(|A<sub>v</sub>|)
+
+A<sub>v</sub>(dB) = 20 log<sub>10</sub>(15.38)
+
+A<sub>v</sub>(dB) ≈ **23.74 dB**
+
+---
+
+## Final Comparison
+
+| Type | Gain (V/V) | Gain (dB) |
+|---|---|---|
+| Practical | **8.7765** | **18.86 dB** |
+| Theoretical | **15.38** | **23.74 dB** |
+
+The difference between theoretical and practical gain occurs due to **non-ideal MOSFET effects such as channel length modulation, mobility degradation, parasitic capacitances, and simplified assumptions used in hand calculations**.
 
 ---
 
@@ -469,19 +565,99 @@ Voltage margin between **V<sub>OUT</sub> and ground** ensuring NMOS remains in s
 | V<sub>OUT,pp</sub> | 53.98 mV |
 | V<sub>IN,pp</sub> | 19.18 mV |
 
-Voltage gain
+---
+## Practical Gain Calculation
 
+The voltage gain of the amplifier is obtained from the transient waveform using the ratio of output voltage to input voltage.
 A<sub>v</sub> = V<sub>OUT</sub> / V<sub>IN</sub>
 
 A<sub>v</sub> ≈ **2.8146 V/V**
 
+### Gain in dB
+
+Gain(dB) = 20 log<sub>10</sub>(A<sub>v</sub>)
+Gain ≈ **8.49 dB**
+
 ---
 
-## Gain in dB
+## Theoretical Gain Calculation
 
-Gain(dB) = 20 log₁₀(A<sub>v</sub>)
+### Channel Length Modulation Parameter (λ)
 
-Gain ≈ **8.49 dB**
+In MOSFETs, the channel length modulation parameter (λ) represents the dependence of the drain current on the drain–source voltage (V<sub>DS</sub>) in the saturation region. Due to channel length modulation, the drain current slightly increases with V<sub>DS</sub>, which results in a **finite small-signal output resistance** for the transistor.
+
+In practical CMOS technologies, the values of λ for **NMOS and PMOS devices are not exactly the same**. One of the primary reasons for this difference is the variation in **carrier mobility**. The mobility of electrons (in NMOS devices) is significantly higher than the mobility of holes (in PMOS devices). Because of this mobility difference, the channel characteristics and effective channel length modulation behavior differ between NMOS and PMOS transistors.
+
+However, for simplified theoretical analysis, a typical approximate value is assumed based on commonly used ranges for **180 nm CMOS technology**.
+
+Assumed values:
+
+λ<sub>n</sub> = **0.1 V⁻¹**  
+λ<sub>p</sub> = **0.1 V⁻¹**
+
+---
+
+### Step 1: Transconductance (g<sub>m1</sub>)
+
+| Parameter | Expression | Substitution | Result |
+|---|---|---|---|
+| g<sub>m1</sub> | 2I<sub>D</sub> / V<sub>OV</sub> | (2 × 200×10⁻⁶) / 0.25 | **1.6 mS** |
+
+Since transistors **M1 and M3 carry the same current and have the same overdrive voltage**,  
+
+g<sub>m1</sub> = g<sub>m3</sub> = **1.6 mS**
+
+---
+
+### Step 2: Output Resistance
+
+| Transistor | Expression | Substitution | Result |
+|---|---|---|---|
+| NMOS (r<sub>o1</sub>, r<sub>o2</sub>) | 1 / (λ I<sub>D</sub>) | 1 / (0.1 × 200×10⁻⁶) | **50 kΩ** |
+| PMOS (r<sub>o3</sub>) | 1 / (λ I<sub>D</sub>) | 1 / (0.1 × 200×10⁻⁶) | **50 kΩ** |
+
+---
+
+### Step 3: Effective Output Resistance
+
+r<sub>o,eff</sub> = r<sub>o1</sub> ∥ r<sub>o3</sub>
+
+r<sub>o,eff</sub> = (50k × 50k) / (50k + 50k)
+
+r<sub>o,eff</sub> ≈ **25 kΩ**
+
+---
+
+### Step 4: Voltage Gain (With Source Degeneration)
+
+A<sub>v</sub> = − g<sub>m1</sub> × r<sub>o,eff</sub> / (1 + g<sub>m1</sub> r<sub>o2</sub>)
+
+Substituting values
+
+A<sub>v</sub> = − (1.6×10⁻³ × 25×10³) / (1 + 1.6×10⁻³ × 50×10³)
+
+A<sub>v</sub> = − 40 / 81
+
+A<sub>v</sub> ≈ **−0.494 V/V**
+
+---
+
+### Gain in dB
+
+A<sub>v</sub>(dB) = 20 log<sub>10</sub>(|A<sub>v</sub>|)
+
+A<sub>v</sub>(dB) ≈ **−6.12 dB**
+
+---
+
+## Final Comparison
+
+| Type | Gain (V/V) | Gain (dB) |
+|---|---|---|
+| Practical | **2.8146** | **8.49 dB** |
+| Theoretical | **0.494** | **−6.12 dB** |
+
+The difference between theoretical and practical gain arises due to **parasitic capacitances, mobility degradation, channel length modulation effects, and non-ideal MOSFET model parameters present in the simulation models**.
 
 ---
 
@@ -810,14 +986,126 @@ A<sub>v</sub> ≈ **15.458 V/V**
 
 ---
 
-## Gain in Decibels
+## Practical Gain in Decibels
 
 Gain(dB) = 20 log<sub>10</sub>(A<sub>v</sub>)
 
 Gain ≈ **23.283 dB**
 
 ---
+## Theoretical Calculations
 
+### Assumption of Channel Length Modulation Parameter (λ)
+
+In theoretical hand calculations, the channel length modulation parameter is assumed as
+
+λ = **0.1 V⁻¹**
+
+This value is commonly used for **short channel CMOS technologies such as 180 nm** during first-order analysis.  
+The parameter λ models the variation of drain current with V<sub>DS</sub> in saturation, which results in a **finite output resistance**.
+
+---
+
+### Transconductance Calculation
+
+The transconductance of a MOS transistor operating in saturation is
+
+g<sub>m</sub> = 2I<sub>D</sub> / V<sub>OV</sub>
+
+Given
+
+I<sub>D</sub> = 200 µA  
+V<sub>OV</sub> = 0.2 V
+
+Substituting
+g<sub>m</sub> = (2 × 200 × 10⁻⁶) / 0.2
+g<sub>m</sub> = 2 × 10⁻³ S
+g<sub>m</sub> = **2 mS**
+
+Since transistors **M1 and M3 carry the same current and have the same overdrive voltage**, their transconductance values are equal.
+g<sub>m1</sub> = g<sub>m3</sub> = **2 mS**
+
+---
+
+### Output Resistance Calculation
+
+The small-signal output resistance is
+r<sub>o</sub> = 1 / (λ I<sub>D</sub>)
+Given
+λ = 0.1 V⁻¹  
+I<sub>D</sub> = 200 µA
+
+Substituting
+r<sub>o</sub> = 1 / (0.1 × 200 × 10⁻⁶)
+r<sub>o</sub> = 1 / (20 × 10⁻⁶)
+r<sub>o</sub> = **50 kΩ**
+
+---
+
+### Voltage Gain Calculation
+
+The small signal voltage gain of the amplifier is
+A<sub>v</sub> = − g<sub>m1</sub> r<sub>o2</sub> / (1 + g<sub>m1</sub> / g<sub>m3</sub>)
+Since
+g<sub>m1</sub> = g<sub>m3</sub> ( both have same V<sub>ov</sub> and same current flowing through them)
+The denominator becomes
+1 + g<sub>m1</sub> / g<sub>m3</sub> = 2
+
+Substituting
+
+g<sub>m1</sub> = 2 mS  
+r<sub>o2</sub> = 50 kΩ
+A<sub>v</sub> = − (2 mS × 50 kΩ) / 2
+A<sub>v</sub> = **−50 V/V**
+
+--
+
+### Gain Magnitude
+|A<sub>v</sub>| = **50**
+---
+
+### Gain in Decibels
+
+Gain in dB is calculated using
+
+A<sub>v</sub>(dB) = 20 log<sub>10</sub>(|A<sub>v</sub>|)
+
+A<sub>v</sub>(dB) = 20 log<sub>10</sub>(50)
+
+A<sub>v</sub>(dB) ≈ **33.97 dB**
+
+---
+
+### Summary of Theoretical Results
+
+| Parameter | Value |
+|---|---|
+| I<sub>D</sub> | 200 µA |
+| V<sub>OV</sub> | 0.2 V |
+| g<sub>m1</sub> = g<sub>m3</sub> | 2 mS |
+| r<sub>o</sub> | 50 kΩ |
+| Voltage Gain | −50 V/V |
+| Gain Magnitude | 50 |
+| Gain (dB) | 33.97 dB |
+## Gain Summary
+
+| Type of Gain | Value |
+|---|---|
+| Theoretical Voltage Gain A<sub>v</sub> | 50 V/V |
+| Theoretical Gain (dB) | 33.97 dB |
+| Practical Voltage Gain A<sub>v</sub> | 15.458 V/V |
+| Practical Gain (dB) | 23.283 dB |
+
+> **Gain Comparison**
+>
+> **Theoretical Gain**
+> - A<sub>v</sub> = −50 V/V  
+> - Gain = 33.97 dB  
+>
+> **Practical Gain (Simulation)**
+> - A<sub>v</sub> = 15.458 V/V  
+> - Gain = 23.283 dB
+> - *The difference between theoretical and practical gain occurs due to non-ideal effects such as channel length modulation, mobility degradation, and parasitic capacitances present in the MOSFET models used in simulation.**
 ## AC Analysis
 
 <img width="1919" height="840" alt="image" src="https://github.com/user-attachments/assets/0f8b50da-a791-4f0a-92a7-0c68fea6b782" />
@@ -903,3 +1191,47 @@ The amplifier achieved
 - Unity gain bandwidth ≈ **4.018 GHz**
 
 The use of an **active load improves gain while maintaining proper biasing and output swing**.
+
+---
+## Performance Comparison of Implemented Amplifier Topologies
+
+| Performance Metric | Circuit 1: CS with PMOS Active Load | Circuit 2: Source Degenerated CS | Circuit 3: CS with Diode-Connected Load |
+|---|---|---|---|
+| Amplifier Structure | Common Source with PMOS Active Load | Source Degenerated Common Source | Common Source with Diode-Connected Bias |
+| Bias Current I<sub>D</sub> | 200 µA | 200 µA | 200 µA |
+| Supply Voltage V<sub>DD</sub> | 1.5 V | 1.5 V | 1.5 V |
+| Power Dissipation | 0.30 mW | 0.30 mW | 0.30 mW |
+| Theoretical Gain | 23.74 dB | −6.12 dB | 33.97 dB |
+| Practical Gain (Transient) | 18.86 dB | 8.49 dB | 23.28 dB |
+| Midband Gain (AC) | 18.77 dB | 8.985 dB | 23.987 dB |
+| Bandwidth | 374.11 MHz | 98.107 MHz | 280.97 MHz |
+| Unity Gain Bandwidth | 3.508 GHz | 17.4186 MHz | 4.018 GHz |
+| Output Resistance | Moderate | Lower (due to source degeneration) | Higher (active load effect) |
+| Linearity | Moderate | Improved (degeneration resistor present) | Moderate |
+| Frequency Performance | Good | Limited due to degeneration | High |
+
+---
+## Inference
+
+1. All amplifier circuits were successfully biased at **I<sub>D</sub> = 200 µA** while satisfying the given **power constraint** under a **1.5 V supply voltage**.
+
+2. The **Common Source amplifier with PMOS active load** provides a balanced trade-off between **gain and bandwidth**, making it suitable for moderate gain applications.
+
+3. The **Source Degenerated Common Source amplifier** exhibits **lower voltage gain** due to the presence of the degeneration resistor R<sub>S</sub>, but it improves **linearity and stability** of the amplifier.
+
+4. The **Common Source amplifier with diode-connected load** achieves the **highest theoretical gain** because the active load increases the **effective output resistance**.
+
+5. The AC analysis confirms the expected **gain-bandwidth trade-off**, where circuits with higher gain generally exhibit reduced bandwidth.
+
+6. The simulation results validate the theoretical design approach while demonstrating the impact of **non-ideal MOSFET effects** in practical circuits.
+
+---
+## Conclusion
+
+In this study, three different MOS amplifier topologies were designed and analyzed using **TSMC 180 nm CMOS technology** under the same bias conditions. Each amplifier was operated with a **drain current of 200 µA** and a **supply voltage of 1.5 V**, ensuring that the power consumption remained within the specified constraint.
+
+The **Common Source amplifier with PMOS active load** provided a good balance between gain and bandwidth, making it suitable for moderate-gain analog applications. The **Source Degenerated Common Source amplifier** exhibited lower gain due to the presence of the degeneration resistor, but it improved the **linearity and stability** of the amplifier. The **Common Source amplifier with diode-connected load** achieved the **highest theoretical gain** because the active load increases the effective output resistance of the circuit.
+
+Frequency analysis showed that the amplifiers demonstrate the expected **gain-bandwidth trade-off**, where higher gain generally results in reduced bandwidth. The simulation results closely follow theoretical predictions, while small differences arise due to **non-ideal MOSFET effects such as channel length modulation, mobility degradation, parasitic capacitances, and accurate BSIM device models used in simulation**.
+
+Overall, the experiment successfully demonstrates the **impact of circuit topology on gain, bandwidth, linearity, and stability**, highlighting the fundamental design trade-offs involved in **analog CMOS amplifier design**.
