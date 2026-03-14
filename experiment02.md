@@ -1,9 +1,7 @@
 # MOS Common Source Amplifier Design and Analysis
 **Technology:** TSMC 180 nm  
 **Simulation Tool:** LTspice  
-
 ---
-
 ## Objective
 
 To design and analyze a **MOS Common Source amplifier** using **TSMC 180 nm CMOS technology** and evaluate its performance in terms of **bias current, gain, bandwidth, and output swing** through simulation.
